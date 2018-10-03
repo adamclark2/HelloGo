@@ -1,0 +1,15 @@
+build:
+Build the thing
+
+run: 
+Build & run
+
+genConfig: 
+Generate a blank config file & test it
+
+clean: 
+Remove build products, config.json is preserved
+
+help: 
+Show the help message
+
