@@ -43,6 +43,7 @@ func main() {
 
 func apiHandleTopic(w http.ResponseWriter, r *http.Request) {
     var to = &topic_t{html.EscapeString(r.URL.Path),"woot"};
+    w.Header().Set("content-type", "application/json")
     json.NewEncoder(w).Encode(to)
 }
 
