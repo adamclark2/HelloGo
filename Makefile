@@ -2,12 +2,12 @@
 build: Main
 
 Main: src/Main.go
-	go build -o Main.o src/Main.go
+	go build -o Main.o src/Main.go src/Config.go
 
 run: build
 	./Main.o
 
-genConfig: 
+genConfig: src/GenConfig.go src/Config.go
 	go build -o GenConfig.o src/GenConfig.go src/Config.go
 	./GenConfig.o
 

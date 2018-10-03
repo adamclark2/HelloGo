@@ -38,7 +38,9 @@ func main() {
     http.HandleFunc("/api/topics/", apiHandleTopic)
 
     // Listen
-    http.ListenAndServe(":8080", nil)
+    var port = GetConfig().Port;
+    port = ":" + port;
+    http.ListenAndServe(port, nil)
 }
 
 func apiHandleTopic(w http.ResponseWriter, r *http.Request) {
@@ -64,6 +66,7 @@ func getCard(s string) string{
 func handleTopic(w http.ResponseWriter, r *http.Request){
     fmt.Fprintf(w, string(includes) + header);
     fmt.Fprintf(w, "<div class=\"jumbotron container text-dark\">" + html.EscapeString(r.URL.Path) + "</div>")
+    doFooter(w, r);
 }
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
@@ -77,4 +80,9 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
     }
 
     fmt.Fprintf(w, "</div>");
+    doFooter(w, r);
+}
+
+func doFooter(w http.ResponseWriter, r *http.Request){
+    fmt.Fprintf(w, "<div class=row>Server Name" + html.EscapeString(": " + GetConfig().Name) + "</div>")
 }
