@@ -4,11 +4,17 @@ import "net/http"
 import "html"
 import "io/ioutil"
 import "fmt"
+import "encoding/json"
 
 var includes []byte;
 var header string;
 
 var topic = [...]string {"Computer Science", "Stacks", "Queues", "Cool Stuff"};
+
+type topic_t struct{
+    Title string
+    Description string
+}
 
 func main() {
     var err error = nil;
@@ -24,9 +30,20 @@ func main() {
     }
     header = string(tmp)
 
+    // HTML
     http.HandleFunc("/topics/", handleTopic)
     http.HandleFunc("/", handleIndex)
+
+    // API
+    http.HandleFunc("/api/topics/", apiHandleTopic)
+
+    // Listen
     http.ListenAndServe(":8080", nil)
+}
+
+func apiHandleTopic(w http.ResponseWriter, r *http.Request) {
+    var to = &topic_t{html.EscapeString(r.URL.Path),"woot"};
+    json.NewEncoder(w).Encode(to)
 }
 
 func getCard(s string) string{
